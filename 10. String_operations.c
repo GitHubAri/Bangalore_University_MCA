@@ -27,9 +27,10 @@ void string_concatinate(char str1[], char str2[]){
 	}
 	str1[i]  = '\0';
 }
-char extract_substring(char str[], char str1[]/*String str1[] is a NULL siting.*/){
+char *extract_substring(char *str){
 	int len, start, end;
 	int i = 0, j = 0;
+	char *result = NULL;
 	len = strlen(str);
 	printf("\nEnter Start: ");
 	scanf("%d", &start);
@@ -41,13 +42,20 @@ char extract_substring(char str[], char str1[]/*String str1[] is a NULL siting.*
 	}	    
 	else
 	{
-		i = start-1;
-		while(i<=end-1)
-		{
-		    str1[j] = str[i];
-		    i++;
-		    j++;
-	    }
+//		i = start-1;
+//		while(i<=end-1)
+//		{
+//			*(result+j) = *(str + i);
+//			i++;
+//			j++;
+//	    }
+
+
+        for(i = start-1, j=0; i<=end-1; i++,j++){
+        	*(result+j) = *(str+i);
+		}
+		result[j] = '\0';
+        return result;
     }
 }
 
@@ -116,8 +124,8 @@ int main() {
 				printf("\n\n*****Extract a sustring from a Strings *****\n");
 				printf("Enter a string: \n");
 				scanf("%s",str);
-				extract_substring(str,str1);
-				printf("Substring of String : '%s' = '%s'\n\n", str,str1);
+				result = extract_substring(str);
+				printf("Substring of String : '%s' = '%s'\n\n", str,result);
 				break;
 			case 4:
 				printf("\n\n*****String Replace with Strings *****\n");
@@ -142,3 +150,4 @@ int main() {
 	system("PAUSE");
 	return 0;
 }
+
