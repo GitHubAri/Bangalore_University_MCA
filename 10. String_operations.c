@@ -27,36 +27,21 @@ void string_concatinate(char str1[], char str2[]){
 	}
 	str1[i]  = '\0';
 }
-char *extract_substring(char *str){
-	int len, start, end;
-	int i = 0, j = 0;
-	char *result = NULL;
-	len = strlen(str);
-	printf("\nEnter Start: ");
-	scanf("%d", &start);
-	printf("\nEnter End: ");
-	scanf("%d", &end);
-	if(start<=0 || end >len){
-		printf("Un-acceptable Length.");
-		free(str);
-	}	    
+char* extract_substring(char* str, int start, int end, int len) 
+{ 
+	char* result;
+	int i,count=0;
+    if (str == 0 || strlen(str) == 0 || strlen(str) < start || strlen(str) < (start+end)) 
+    	return 0; 
 	else
 	{
-//		i = start-1;
-//		while(i<=end-1)
-//		{
-//			*(result+j) = *(str + i);
-//			i++;
-//			j++;
-//	    }
-
-
-        for(i = start-1, j=0; i<=end-1; i++,j++){
-        	*(result+j) = *(str+i);
+		result = (char *)malloc(sizeof(len)); 
+		for(i = start-1, count = 0; i<=end; i++, count++){
+			result[count]= str[i];
 		}
-		result[j] = '\0';
-        return result;
-    }
+		result[i] = '\0'; 
+    	return result; 	
+	}
 }
 
 char *string_replace(char *str, char *str1, char *str2){
@@ -91,9 +76,10 @@ char *string_replace(char *str, char *str1, char *str2){
 
 int main() {
 	int ch;
+	int start, end;
 	char str[100],str2[100],str1[100];
 	char *result = NULL;
-	int length;
+	int length,len;
 	
 	while(1){
 		printf("Find the length of a String:                  [PRESS 1]\n");
@@ -124,8 +110,16 @@ int main() {
 				printf("\n\n*****Extract a sustring from a Strings *****\n");
 				printf("Enter a string: \n");
 				scanf("%s",str);
-				result = extract_substring(str);
-				printf("Substring of String : '%s' = '%s'\n\n", str,result);
+				len = string_length(str);
+				printf("\nEnter Start: ");
+				scanf("%d", &start);
+				printf("\nEnter End: ");
+				scanf("%d", &end);
+				result = extract_substring(str, start, end, len);
+				if(result != 0)
+					printf("Substring of String : '%s' = '%s'\n\n", str,result);
+				else
+				    printf("\n\nString Extraction Not possible.\n");
 				break;
 			case 4:
 				printf("\n\n*****String Replace with Strings *****\n");
@@ -150,4 +144,3 @@ int main() {
 	system("PAUSE");
 	return 0;
 }
-
